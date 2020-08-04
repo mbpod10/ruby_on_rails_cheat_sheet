@@ -127,3 +127,60 @@ User.update(1, :id => 71) //find by id and change id
 User.all //active records
 SELECT * FROM users //psql
 ```
+
+# Make A Corrective Migration To Schema
+
+```
+rails g migration FixDescriptionColumnTypo
+```
+
+-change should appear in new migration
+-add rename_column to migration
+-after rename_column: table to be changed, column to be changed, and how it should be
+
+```
+def change
+  rename_column :characters, :desciption, :description
+end
+```
+
+# Make A Corrective Migration To Table Name
+
+```
+rails g migration ChangeTableName
+```
+
+-add rename_table to migration
+-after, select table to be renamed, and then the new name of the table
+
+```
+class ChangeTableName < ActiveRecord::Migration[5.0]
+  def change
+    rename_table :characters, :matrix_characters
+  end
+end
+```
+
+# RollBack The Previous Migration
+
+-Rid the previous migration
+
+```
+rails db:rollback
+```
+
+-Either destroy migration by:
+
+```
+rails destroy migration <migration name>
+```
+
+or delete manually via VScode
+
+# Drop Database
+
+-reset drops the databases, re-runs the migrations, and re-seeds the databases.
+
+```
+rails db:reset
+```
